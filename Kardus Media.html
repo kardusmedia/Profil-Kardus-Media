@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Kardus Media — Video Editing & Fotografi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fbf6ec;
+            --bg2: #f3e9d6;
+            --fg: #1b1510;
+            --muted: #6b5d4c;
+            --card: #fff;
+            --line: rgba(27, 21, 16, .13);
+            --kraft: #f8c886;
+            --accent: #ff6a1a;
+            --ink: #1a1208;
+            --kraft-d: #d9a45c
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #121212;
+                --bg2: #1e1e1e;
+                --fg: #f6efe3;
+                --muted: #a89c8a;
+                --card: #1e1e1e;
+                --line: rgba(255, 255, 255, .11)
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #121212;
+            --bg2: #1e1e1e;
+            --fg: #f6efe3;
+            --muted: #a89c8a;
+            --card: #1e1e1e;
+            --line: rgba(255, 255, 255, .11)
+        }
+
+        :root {
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+            margin: 0
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font: 400 1rem/1.7 'Plus Jakarta Sans', system-ui, sans-serif;
+            overflow-x: hidden;
+            transition: background .4s, color .4s
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo {
+            font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.05;
+            letter-spacing: -.02em
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 6px
+        }
+
+        .wrap {
+            width: min(1160px, 100% - 2.5rem);
+            margin-inline: auto
+        }
+
+        section {
+            padding: clamp(4.5rem, 10vw, 8rem) 0;
+            position: relative
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            max-width: 18ch
+        }
+
+        .lead {
+            color: var(--muted);
+            max-width: 56ch
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .9rem 1.6rem;
+            border-radius: 999px;
+            font: 600 .95rem 'Plus Jakarta Sans', sans-serif;
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s, background .25s
+        }
+
+        .btn-main {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 24px -8px var(--accent)
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 14px 30px -8px var(--accent)
+        }
+
+        .btn-main::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .45) 50%, transparent 70%);
+            transform: translateX(-120%);
+            transition: transform .6s
+        }
+
+        .btn-main:hover::after {
+            transform: translateX(120%)
+        }
+
+        .btn-ghost {
+            border-color: var(--line);
+            color: var(--fg)
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--kraft);
+            background: var(--kraft);
+            color: var(--ink);
+            transform: translateY(-3px)
+        }
+
+        .btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor
+        }
+
+        /* nav */
+        header {
+            position: fixed;
+            top: env(safe-area-inset-top, 0px);
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: background .3s, box-shadow .3s
+        }
+
+        header.solid {
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 1px 0 var(--line)
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .logo i {
+            width: 26px;
+            height: 22px;
+            background: var(--kraft);
+            border-radius: 3px;
+            position: relative;
+            display: block;
+            box-shadow: inset 0 -5px 0 var(--kraft-d)
+        }
+
+        .logo i::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            margin-left: -3px;
+            background: rgba(255, 255, 255, .55)
+        }
+
+        .links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            padding: 0;
+            font-weight: 500
+        }
+
+        .links a {
+            position: relative;
+            padding: .3rem 0
+        }
+
+        .links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 100%;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .3s
+        }
+
+        .links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left
+        }
+
+        .nav-r {
+            display: flex;
+            gap: .6rem;
+            align-items: center
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--fg);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 1.1rem
+        }
+
+        .burger {
+            display: none
+        }
+
+        .nav-r .btn {
+            padding: .6rem 1.2rem
+        }
+
+        /* hero */
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            padding-top: 110px;
+            overflow: hidden
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: .35;
+            z-index: -1;
+            animation: float 14s ease-in-out infinite
+        }
+
+        .b1 {
+            width: 420px;
+            height: 420px;
+            background: var(--kraft);
+            top: -80px;
+            left: -120px
+        }
+
+        .b2 {
+            width: 340px;
+            height: 340px;
+            background: var(--accent);
+            bottom: -60px;
+            right: -80px;
+            opacity: .22;
+            animation-delay: -6s
+        }
+
+        @keyframes float {
+            50% {
+                margin-top: 40px;
+                margin-left: 30px
+            }
+        }
+
+        .hero .wrap {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7.5vw, 5.8rem);
+            font-weight: 800
+        }
+
+        .hero h1 span {
+            display: block;
+            overflow: hidden
+        }
+
+        .hero h1 span b {
+            display: inline-block;
+            font-weight: inherit;
+            transform: translateY(105%);
+            animation: up .9s cubic-bezier(.2, .8, .2, 1) forwards
+        }
+
+        .hero h1 span:nth-child(2) b {
+            animation-delay: .12s;
+            color: var(--kraft)
+        }
+
+        .hero h1 span:nth-child(3) b {
+            animation-delay: .24s
+        }
+
+        @keyframes up {
+            to {
+                transform: none
+            }
+        }
+
+        .hero p {
+            margin: 1.5rem 0 2rem;
+            color: var(--muted);
+            max-width: 46ch;
+            font-size: 1.08rem
+        }
+
+        .cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem
+        }
+
+        .stats {
+            display: flex;
+            gap: 2.2rem;
+            margin-top: 2.8rem;
+            flex-wrap: wrap
+        }
+
+        .stats b {
+            font: 800 1.9rem 'Outfit';
+            display: block;
+            line-height: 1
+        }
+
+        .stats small {
+            color: var(--muted)
+        }
+
+        /* box scene */
+        .scene {
+            position: relative;
+            width: min(340px, 80vw);
+            height: 430px;
+            margin: auto;
+            perspective: 1000px;
+            cursor: pointer
+        }
+
+        .box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 210px;
+            background: linear-gradient(160deg, #fbd9a4, var(--kraft) 40%, #e9b46c);
+            border-radius: 6px 6px 10px 10px;
+            z-index: 3;
+            box-shadow: 0 40px 60px -20px rgba(0, 0, 0, .5);
+            color: var(--ink)
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 56px;
+            margin-left: -28px;
+            background: rgba(255, 255, 255, .4)
+        }
+
+        .box em {
+            position: absolute;
+            left: 1.2rem;
+            bottom: 1rem;
+            font: 800 1.15rem 'Outfit';
+            font-style: normal;
+            letter-spacing: .02em
+        }
+
+        .box small {
+            position: absolute;
+            right: 1.2rem;
+            bottom: 1.1rem;
+            font-size: .75rem;
+            opacity: .7
+        }
+
+        .lid {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -2px;
+            height: 70px;
+            background: linear-gradient(#fcdcab, #f1bf79);
+            border-radius: 6px 6px 0 0;
+            transform-origin: top;
+            transition: transform 1s cubic-bezier(.6, 0, .2, 1);
+            backface-visibility: hidden;
+            z-index: 4;
+            box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .08)
+        }
+
+        .lid::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 56px;
+            margin-left: -28px;
+            background: rgba(255, 255, 255, .4)
+        }
+
+        .reel {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            width: 170px;
+            height: 290px;
+            margin-left: -85px;
+            border-radius: 22px;
+            background: linear-gradient(160deg, var(--accent), #7a1f6b 70%, #1b0f2e);
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            transform: translateY(0);
+            transition: transform 1.2s cubic-bezier(.3, 1.4, .4, 1) .5s;
+            box-shadow: 0 0 60px -5px var(--accent)
+        }
+
+        .reel .play {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            animation: pulse 2s infinite
+        }
+
+        .reel .play::after {
+            content: "";
+            border-left: 18px solid var(--accent);
+            border-block: 11px solid transparent;
+            margin-left: 5px
+        }
+
+        .reel span {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            right: 14px;
+            height: 4px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, .3)
+        }
+
+        .reel span::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            width: 40%;
+            background: #fff;
+            border-radius: 4px;
+            animation: bar 4s linear infinite
+        }
+
+        @keyframes bar {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, .5)
+            }
+
+            100% {
+                box-shadow: 0 0 0 22px transparent
+            }
+        }
+
+        .scene.open .lid {
+            transform: rotateX(160deg)
+        }
+
+        .scene.open .reel {
+            transform: translateY(-130px) rotate(-4deg)
+        }
+
+        /* marquee */
+        .tape {
+            background: var(--kraft);
+            color: var(--ink);
+            padding: 1rem 0;
+            overflow: hidden;
+            transform: rotate(-1.5deg);
+            margin: -1rem -2rem;
+            font: 700 1.3rem 'Outfit'
+        }
+
+        .tape div {
+            display: flex;
+            gap: 3rem;
+            width: max-content;
+            animation: slide 28s linear infinite
+        }
+
+        .tape span::after {
+            content: "✂";
+            margin-left: 3rem;
+            opacity: .5
+        }
+
+        @keyframes slide {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* about */
+        .about {
+            background: var(--kraft);
+            color: var(--ink);
+            margin-top: 3rem
+        }
+
+        .about .lead {
+            color: #4b3a22
+        }
+
+        .about .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start
+        }
+
+        .vals {
+            display: grid;
+            gap: 1rem
+        }
+
+        .vals div {
+            background: rgba(255, 255, 255, .45);
+            border-radius: 18px;
+            padding: 1.3rem 1.5rem;
+            border: 1.5px dashed rgba(26, 18, 8, .35);
+            transition: transform .3s, background .3s
+        }
+
+        .vals div:hover {
+            transform: translateX(8px) rotate(-.6deg);
+            background: rgba(255, 255, 255, .75)
+        }
+
+        .vals h3 {
+            font-size: 1.25rem;
+            margin-bottom: .3rem
+        }
+
+        .vals p {
+            font-size: .95rem;
+            color: #4b3a22
+        }
+
+        /* services */
+        .svc {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-top: 3rem
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 1.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform .35s, border-color .35s, box-shadow .35s;
+            transform-style: preserve-3d
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: auto -30% -60% -30%;
+            height: 70%;
+            background: radial-gradient(circle, var(--kraft), transparent 65%);
+            opacity: 0;
+            transition: opacity .4s
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--kraft);
+            box-shadow: 0 24px 40px -24px rgba(0, 0, 0, .45)
+        }
+
+        .card:hover::before {
+            opacity: .35
+        }
+
+        .card>* {
+            position: relative
+        }
+
+        .ico {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: var(--kraft);
+            color: var(--ink);
+            display: grid;
+            place-items: center;
+            margin-bottom: 1.2rem;
+            transition: transform .4s
+        }
+
+        .card:hover .ico {
+            transform: rotate(-8deg) scale(1.1);
+            background: var(--accent);
+            color: #fff
+        }
+
+        .ico svg {
+            width: 26px;
+            height: 26px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: .5rem
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: .95rem
+        }
+
+        .group {
+            margin-top: 3rem;
+            font: 700 1.1rem 'Outfit';
+            color: var(--accent)
+        }
+
+        /* portfolio */
+        .port {
+            background: var(--bg2)
+        }
+
+        .pgrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.1rem;
+            margin-top: 3rem
+        }
+
+        .vid {
+            aspect-ratio: 9/16;
+            border-radius: 20px;
+            background: var(--g);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 0;
+            color: #fff;
+            text-align: left;
+            font: inherit;
+            padding: 0;
+            transition: transform .4s, box-shadow .4s
+        }
+
+        .vid:nth-child(even) {
+            margin-top: 2rem
+        }
+
+        .vid::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 70% 20%, rgba(255, 255, 255, .25), transparent 45%), linear-gradient(transparent 45%, rgba(0, 0, 0, .75))
+        }
+
+        .vid:hover {
+            transform: translateY(-10px) rotate(-1deg);
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .6)
+        }
+
+        .vid .p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 64px;
+            height: 64px;
+            margin: -32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, .6);
+            display: grid;
+            place-items: center;
+            transition: transform .35s, background .35s
+        }
+
+        .vid .p::after {
+            content: "";
+            border-left: 16px solid #fff;
+            border-block: 10px solid transparent;
+            margin-left: 4px
+        }
+
+        .vid:hover .p {
+            transform: scale(1.2);
+            background: var(--accent)
+        }
+
+        .vid .t {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem
+        }
+
+        .vid .t b {
+            font: 700 1.05rem 'Outfit';
+            display: block;
+            line-height: 1.2
+        }
+
+        .vid .t small {
+            opacity: .8
+        }
+
+        .vid .tag {
+            position: absolute;
+            top: .8rem;
+            left: .8rem;
+            background: var(--kraft);
+            color: var(--ink);
+            font-size: .72rem;
+            font-weight: 600;
+            padding: .2rem .65rem;
+            border-radius: 99px
+        }
+
+        .more {
+            margin-top: 2.5rem;
+            text-align: center
+        }
+
+        /* modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, .8);
+            backdrop-filter: blur(8px);
+            display: none;
+            place-items: center;
+            padding: 1rem
+        }
+
+        .modal.on {
+            display: grid;
+            animation: fade .3s
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0
+            }
+        }
+
+        .phone {
+            width: min(330px, 88vw);
+            aspect-ratio: 9/16;
+            max-height: 86svh;
+            border-radius: 28px;
+            background: var(--g);
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.4rem;
+            animation: pop .4s cubic-bezier(.3, 1.4, .4, 1)
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.8)
+            }
+        }
+
+        .phone h3 {
+            font-size: 1.4rem
+        }
+
+        .phone p {
+            font-size: .85rem;
+            opacity: .85;
+            margin: .4rem 0 1rem
+        }
+
+        .phone .prog {
+            height: 4px;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 4px;
+            overflow: hidden
+        }
+
+        .phone .prog i {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #fff;
+            animation: bar 8s linear infinite
+        }
+
+        .x {
+            position: absolute;
+            top: .8rem;
+            right: .8rem;
+            background: rgba(0, 0, 0, .4);
+            color: #fff;
+            border: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem
+        }
+
+        /* testi */
+        .slider {
+            margin-top: 3rem;
+            overflow: hidden
+        }
+
+        .track {
+            display: flex;
+            transition: transform .7s cubic-bezier(.6, 0, .2, 1)
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            padding: 0 .5rem
+        }
+
+        .quote {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            padding: clamp(1.6rem, 4vw, 3rem);
+            max-width: 820px;
+            margin: auto
+        }
+
+        .quote q {
+            display: block;
+            font: 500 clamp(1.2rem, 2.6vw, 1.7rem)/1.4 'Outfit';
+            quotes: none
+        }
+
+        .who {
+            display: flex;
+            gap: .9rem;
+            align-items: center;
+            margin-top: 1.6rem
+        }
+
+        .av {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--kraft);
+            color: var(--ink);
+            display: grid;
+            place-items: center;
+            font: 800 1.1rem 'Outfit'
+        }
+
+        .who small {
+            color: var(--muted);
+            display: block;
+            line-height: 1.3
+        }
+
+        .dots {
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+            margin-top: 1.6rem
+        }
+
+        .dots button {
+            width: 10px;
+            height: 10px;
+            border-radius: 99px;
+            border: 0;
+            background: var(--line);
+            cursor: pointer;
+            transition: width .3s, background .3s;
+            padding: 0
+        }
+
+        .dots button.on {
+            width: 32px;
+            background: var(--accent)
+        }
+
+        /* contact */
+        .contact {
+            background: var(--bg2)
+        }
+
+        .cgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem
+        }
+
+        form {
+            display: grid;
+            gap: 1rem
+        }
+
+        label {
+            font-weight: 600;
+            font-size: .9rem;
+            display: grid;
+            gap: .4rem
+        }
+
+        input,
+        select,
+        textarea {
+            font: inherit;
+            color: var(--fg);
+            background: var(--card);
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+            padding: .85rem 1rem;
+            width: 100%;
+            transition: border-color .25s, box-shadow .25s
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 0;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent)
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical
+        }
+
+        .err {
+            color: #e5484d;
+            font-size: .82rem;
+            font-weight: 500;
+            min-height: 1em
+        }
+
+        .discord {
+            background: #5865f2;
+            border-radius: 26px;
+            padding: 2rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            align-self: start
+        }
+
+        .discord::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .1);
+            right: -70px;
+            top: -70px
+        }
+
+        .discord svg {
+            width: 56px;
+            height: 56px;
+            fill: #fff;
+            margin-bottom: 1rem;
+            animation: wob 4s ease-in-out infinite
+        }
+
+        @keyframes wob {
+            50% {
+                transform: rotate(-8deg) translateY(-4px)
+            }
+        }
+
+        .discord h3 {
+            font-size: 1.6rem;
+            margin-bottom: .5rem
+        }
+
+        .discord p {
+            opacity: .9;
+            margin-bottom: 1.4rem
+        }
+
+        .discord .btn {
+            background: #fff;
+            color: #5865f2
+        }
+
+        .discord .btn:hover {
+            transform: translateY(-3px) scale(1.04)
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+            transform: translate(-50%, 200%);
+            background: var(--ink);
+            color: var(--kraft);
+            padding: .9rem 1.4rem;
+            border-radius: 99px;
+            font-weight: 600;
+            z-index: 120;
+            transition: transform .5s cubic-bezier(.3, 1.4, .4, 1);
+            max-width: 90vw
+        }
+
+        .toast.on {
+            transform: translate(-50%, 0)
+        }
+
+        footer {
+            padding: 3rem 0 2rem;
+            border-top: 1px solid var(--line)
+        }
+
+        .frow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem
+        }
+
+        .soc {
+            display: flex;
+            gap: .6rem
+        }
+
+        .soc a {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            display: grid;
+            place-items: center;
+            transition: all .3s
+        }
+
+        .soc a:hover {
+            background: var(--kraft);
+            color: var(--ink);
+            transform: translateY(-4px) rotate(-6deg)
+        }
+
+        .soc svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor
+        }
+
+        .copy {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: 1.5rem
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(34px);
+            transition: opacity .8s, transform .8s cubic-bezier(.2, .8, .2, 1);
+            transition-delay: var(--d, 0s)
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: none
+        }
+
+        @media (max-width:980px) {
+            .pgrid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .svc {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:820px) {
+            .burger {
+                display: grid
+            }
+
+            .links {
+                position: fixed;
+                top: calc(72px + env(safe-area-inset-top, 0px));
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--line);
+                padding: .5rem 1.5rem 1rem;
+                transform: translateY(-130%);
+                transition: transform .4s;
+                z-index: -1
+            }
+
+            .links.on {
+                transform: none
+            }
+
+            .links a {
+                display: block;
+                padding: .9rem 0
+            }
+
+            .nav-r .btn {
+                display: none
+            }
+
+            .hero .wrap,
+            .about .grid,
+            .cgrid {
+                grid-template-columns: 1fr
+            }
+
+            .scene {
+                height: 400px;
+                margin-top: 2rem
+            }
+        }
+
+        @media (max-width:560px) {
+            .svc {
+                grid-template-columns: 1fr
+            }
+
+            .pgrid {
+                gap: .7rem
+            }
+
+            .vid:nth-child(even) {
+                margin-top: 1rem
+            }
+
+            .vid .t b {
+                font-size: .9rem
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important
+            }
+
+            .rv {
+                opacity: 1;
+                transform: none
+            }
+
+            .hero h1 span b {
+                transform: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="top">
+        <nav class="wrap" aria-label="Navigasi utama">
+            <a href="#beranda" class="logo"><i></i>Kardus Media</a>
+            <ul class="links" id="links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="#portofolio">Portofolio</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+            <div class="nav-r">
+                <button class="icon-btn" id="theme" aria-label="Ganti tema terang/gelap">◐</button>
+                <a href="#kontak" class="btn btn-main">Gabung Discord</a>
+                <button class="icon-btn burger" id="burger" aria-label="Buka menu" aria-expanded="false">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="beranda">
+            <div class="blob b1" data-p=".08"></div>
+            <div class="blob b2" data-p="-.06"></div>
+            <div class="wrap">
+                <div>
+                    <h1><span><b>Kemas karya</b></span><span><b>jadi tontonan</b></span><span><b>yang nempel.</b></span>
+                    </h1>
+                    <p>Kardus Media adalah agensi video editing dan fotografi untuk brand, kreator, dan acara yang ingin
+                        tampil rapi, hidup, dan mudah diingat.</p>
+                    <div class="cta">
+                        <a href="#portofolio" class="btn btn-main">Lihat karya kami</a>
+                        <a href="#kontak" class="btn btn-ghost">Mulai proyek</a>
+                    </div>
+                    <div class="stats">
+                        <div><b data-n="320">0</b><small>Video selesai</small></div>
+                        <div><b data-n="85">0</b><small>Klien puas</small></div>
+                        <div><b data-n="48">0</b><small>Jam rata-rata pengerjaan reels</small></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene" role="img" aria-label="Kardus terbuka dan memunculkan video vertikal">
+                    <div class="reel">
+                        <div class="play"></div><span></span>
+                    </div>
+                    <div class="box">
+                        <div class="lid"></div><em>Kardus Media</em><small>Fragile: karya berharga</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="tape" aria-hidden="true">
+            <div id="mq"></div>
+        </div>
+
+        <section class="about" id="tentang">
+            <div class="wrap grid">
+                <div class="rv">
+                    <h2>Dari kardus sederhana, lahir karya yang rapi.</h2>
+                    <p class="lead">Kami memulai dari kamar kecil dengan satu kamera dan banyak kardus bekas sebagai
+                        peredam suara. Sampai sekarang, kami percaya hasil terbaik datang dari proses yang jujur dan
+                        tidak dibuat-buat.</p>
+                    <p class="lead" style="margin-top:1rem">Visi kami: setiap bisnis dan kreator lokal punya visual
+                        setara agensi besar, tanpa harga yang bikin kaget.</p>
+                </div>
+                <div class="vals">
+                    <div class="rv" style="--d:.1s">
+                        <h3>Isi lebih penting dari bungkus</h3>
+                        <p>Cerita dulu, efek kemudian. Setiap potongan harus punya alasan.</p>
+                    </div>
+                    <div class="rv" style="--d:.2s">
+                        <h3>Bisa dipakai ulang</h3>
+                        <p>File rapi, preset warna, dan aset diserahkan lengkap supaya tim kamu bisa melanjutkan.</p>
+                    </div>
+                    <div class="rv" style="--d:.3s">
+                        <h3>Kirim tepat waktu</h3>
+                        <p>Jadwal jelas di awal, revisi terukur, tanpa drama di tengah jalan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="layanan">
+            <div class="wrap">
+                <h2 class="rv">Layanan untuk semua kebutuhan visualmu.</h2>
+                <p class="lead rv">Pilih paket satuan atau kolaborasi bulanan. Semua bisa disesuaikan dengan anggaran.
+                </p>
+                <div class="group rv">Video editing</div>
+                <div class="svc" style="margin-top:1rem">
+                    <article class="card rv">
+                        <div class="ico"><svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 3v18M3 12h18" opacity=".4" />
+                                <circle cx="12" cy="12" r="3.5" />
+                            </svg></div>
+                        <h3>Color grading</h3>
+                        <p>Warna sinematik yang konsisten, dari footage mentah sampai tone khas brand kamu.</p>
+                    </article>
+                    <article class="card rv" style="--d:.1s">
+                        <div class="ico"><svg viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="3" />
+                                <path d="M10 9.5v5l4.5-2.5z" />
+                            </svg></div>
+                        <h3>Video komersial</h3>
+                        <p>Iklan produk dan company profile dengan alur cerita, motion graphics, dan sound design.</p>
+                    </article>
+                    <article class="card rv" style="--d:.2s">
+                        <div class="ico"><svg viewBox="0 0 24 24">
+                                <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+                                <path d="M11 18h2" />
+                            </svg></div>
+                        <h3>Reels & TikTok</h3>
+                        <p>Potongan vertikal cepat dengan ritme, teks, dan hook yang menahan penonton sampai akhir.</p>
+                    </article>
+                </div>
+                <div class="group rv">Fotografi</div>
+                <div class="svc" style="margin-top:1rem">
+                    <article class="card rv">
+                        <div class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M3 8l9-5 9 5v8l-9 5-9-5z" />
+                                <path d="M3 8l9 5 9-5M12 13v8" />
+                            </svg></div>
+                        <h3>Katalog produk</h3>
+                        <p>Foto bersih dengan pencahayaan studio, siap dipakai di marketplace dan media sosial.</p>
+                    </article>
+                    <article class="card rv" style="--d:.1s">
+                        <div class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M3 8h4l2-3h6l2 3h4v11H3z" />
+                                <circle cx="12" cy="13" r="3.5" />
+                            </svg></div>
+                        <h3>Dokumentasi event</h3>
+                        <p>Seminar, launching, sampai konser. Momen penting terekam tanpa mengganggu acara.</p>
+                    </article>
+                    <article class="card rv" style="--d:.2s">
+                        <div class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.500-7 10-7 10z" />
+                            </svg></div>
+                        <h3>Pre-wedding</h3>
+                        <p>Sesi santai di lokasi pilihanmu, dengan arahan pose yang natural dan hasil hangat.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="port" id="portofolio">
+            <div class="wrap">
+                <h2 class="rv">Karya yang sudah tayang di TikTok.</h2>
+                <p class="lead rv">Klik sampul untuk memutar pratinjau. Ganti dengan tautan video TikTok aslimu saat
+                    siap.</p>
+                <div class="pgrid" id="pgrid"></div>
+                <div class="more rv"><a class="btn btn-ghost" href="#kontak">Lihat lainnya di TikTok</a></div>
+            </div>
+        </section>
+
+        <section id="testimoni">
+            <div class="wrap">
+                <h2 class="rv">Kata mereka yang sudah bekerja bareng kami.</h2>
+                <div class="slider rv">
+                    <div class="track" id="track">
+                        <div class="slide">
+                            <div class="quote"><q>Video produk kami naik engagement-nya dua kali lipat sejak pakai
+                                    Kardus Media. Revisi cepat dan komunikasinya enak.</q>
+                                <div class="who">
+                                    <div class="av">R</div>
+                                    <div><b>Rina Safitri</b><small>Pemilik Rinaka Skincare</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="quote"><q>Foto katalog kami akhirnya terlihat profesional. Pencahayaannya rapi
+                                    dan hasilnya selesai sebelum tenggat.</q>
+                                <div class="who">
+                                    <div class="av">B</div>
+                                    <div><b>Bagas Pratama</b><small>Founder Kopi Seberang</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="quote"><q>Color grading untuk film pendek kami terasa sinematik banget. Mereka
+                                    paham mood yang kami mau tanpa banyak dijelaskan.</q>
+                                <div class="who">
+                                    <div class="av">N</div>
+                                    <div><b>Nadia Putri</b><small>Sutradara independen</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dots" id="dots"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="kontak">
+            <div class="wrap">
+                <h2 class="rv">Ceritakan idemu, kami bantu kemas.</h2>
+                <div class="cgrid">
+                    <form id="form" class="rv" novalidate>
+                        <label>Nama<input name="n" autocomplete="name" placeholder="Nama lengkap"><span
+                                class="err"></span></label>
+                        <label>Email<input name="e" type="email" autocomplete="email" placeholder="kamu@email.com"><span
+                                class="err"></span></label>
+                        <label>Layanan<select name="s">
+                                <option>Video editing</option>
+                                <option>Fotografi</option>
+                                <option>Keduanya</option>
+                            </select></label>
+                        <label>Pesan<textarea name="m"
+                                placeholder="Jelaskan proyek, durasi, dan tenggat waktunya"></textarea><span
+                                class="err"></span></label>
+                        <button class="btn btn-main" type="submit">Kirim pesan</button>
+                    </form>
+                    <aside class="discord rv" style="--d:.15s">
+                        <svg viewBox="0 0 127.14 96.36" aria-hidden="true">
+                            <path
+                                d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z" />
+                        </svg>
+                        <h3>Gabung komunitas Discord</h3>
+                        <p>Ngobrol langsung dengan tim, minta feedback karya, dan dapatkan info slot proyek terbaru.</p>
+                        <a class="btn" href="https://discord.gg/" target="_blank" rel="noopener">Gabung server</a>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <div class="frow">
+                <a href="#beranda" class="logo"><i></i>Kardus Media</a>
+                <div class="soc">
+                    <a href="https://tiktok.com/" aria-label="TikTok" target="_blank" rel="noopener"><svg
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M16.6 3a5.2 5.2 0 0 0 4 4.600v3.300a8.500 8.500 0 0 1-4-1.200v6.100a6.300 6.300 0 1 1-6.300-6.300c.3 0 .6 0 .9.100v3.400a3 3 0 1 0 2.100 2.900V3z" />
+                        </svg></a>
+                    <a href="https://instagram.com/" aria-label="Instagram" target="_blank" rel="noopener"><svg
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm5 3.500a4.500 4.500 0 1 1 0 9 4.500 4.500 0 0 1 0-9zm0 2a2.500 2.500 0 1 0 0 5 2.500 2.500 0 0 0 0-5zm5.200-3.200a1.100 1.100 0 1 1 0 2.200 1.100 1.100 0 0 1 0-2.200z" />
+                        </svg></a>
+                    <a href="https://youtube.com/" aria-label="YouTube" target="_blank" rel="noopener"><svg
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M22 8.200a3 3 0 0 0-2.100-2.100C18 5.600 12 5.600 12 5.600s-6 0-7.900.5A3 3 0 0 0 2 8.200 31 31 0 0 0 1.600 12 31 31 0 0 0 2 15.800a3 3 0 0 0 2.100 2.100c1.900.5 7.900.5 7.900.5s6 0 7.900-.5a3 3 0 0 0 2.100-2.100c.3-1.200.4-2.500.4-3.800s-.1-2.600-.4-3.800zM10 15V9l5.200 3z" />
+                        </svg></a>
+                </div>
+            </div>
+            <p class="copy">© 2026 Kardus Media. Semua karya dikemas dengan rapi.</p>
+        </div>
+    </footer>
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Pratinjau video">
+        <div class="phone" id="phone"><button class="x" id="close" aria-label="Tutup">✕</button>
+            <h3 id="mt"></h3>
+            <p id="mc"></p>
+            <div class="prog"><i></i></div>
+        </div>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+        (function () {
+            var $ = function (s, c) { return (c || document).querySelector(s) };
+            var root = document.documentElement, hd = $('header');
+
+            // tema
+            $('#theme').onclick = function () {
+                var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme:dark)').matches;
+                root.dataset.theme = dark ? 'light' : 'dark';
+            };
+            // menu
+            var bg = $('#burger'), lk = $('#links');
+            bg.onclick = function () { var o = lk.classList.toggle('on'); bg.setAttribute('aria-expanded', o); bg.textContent = o ? '✕' : '☰' };
+            lk.addEventListener('click', function (e) { if (e.target.tagName === 'A') { lk.classList.remove('on'); bg.textContent = '☰' } });
+
+            // marquee
+            var words = ['Color grading', 'Video komersial', 'Reels & TikTok', 'Katalog produk', 'Event', 'Pre-wedding'], h = '';
+            for (var i = 0; i < 2; i++)words.forEach(function (w) { h += '<span>' + w + '</span>' });
+            $('#mq').innerHTML = h + h;
+
+            // kardus hero
+            var sc = $('#scene');
+            setTimeout(function () { sc.classList.add('open') }, 700);
+            sc.onclick = function () { sc.classList.toggle('open') };
+
+            // counter
+            function count(el) { var t = +el.dataset.n, s = null; (function f(ts) { s = s || ts; var p = Math.min((ts - s) / 1600, 1); el.textContent = Math.round(t * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f) })(performance.now()) }
+            setTimeout(function () { document.querySelectorAll('[data-n]').forEach(count) }, 900);
+
+            // reveal
+            var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }) }, { threshold: .15 });
+
+            // portofolio
+            var items = [
+                ['Glow Up Serum', 'Iklan komersial', 'Rinaka Skincare', 'linear-gradient(160deg,#ff9a4d,#c2185b 65%,#2b0a3d)', '1,2 jt'],
+                ['Kopi Pagi', 'Reels', 'Kopi Seberang', 'linear-gradient(160deg,#f8c886,#8a5a2b 60%,#2a1a0c)', '840 rb'],
+                ['Night Drive', 'Color grading', 'Film pendek', 'linear-gradient(160deg,#4cc9f0,#3a0ca3 60%,#10002b)', '530 rb'],
+                ['Sneaker Drop', 'TikTok', 'Langkah Store', 'linear-gradient(160deg,#ff6a1a,#b80f0a 60%,#240606)', '2,4 jt'],
+                ['Hari Bahagia', 'Pre-wedding', 'Dita & Raka', 'linear-gradient(160deg,#ffd6e0,#c77d9a 55%,#3a1c2e)', '310 rb'],
+                ['Launching Hub', 'Event', 'Hub Kreatif', 'linear-gradient(160deg,#7bf1a8,#0b7a75 60%,#04201f)', '190 rb'],
+                ['Unboxing Rasa', 'Katalog produk', 'Dapur Nusa', 'linear-gradient(160deg,#ffe066,#e07a00 60%,#331a00)', '670 rb'],
+                ['Street Story', 'Reels', 'Kolektif Jalan', 'linear-gradient(160deg,#b8c0ff,#5a189a 60%,#10002b)', '980 rb']];
+            var g = $('#pgrid');
+            items.forEach(function (it, i) {
+                var b = document.createElement('button'); b.className = 'vid rv'; b.style.setProperty('--g', it[3]); b.style.setProperty('--d', (i % 4) * .08 + 's');
+                b.setAttribute('aria-label', 'Putar ' + it[0]);
+                b.innerHTML = '<span class="tag">' + it[1] + '</span><span class="p"></span><span class="t"><b>' + it[0] + '</b><small>' + it[2] + ' · ' + it[4] + ' tayangan</small></span>';
+                b.onclick = function () { openM(it) }; g.appendChild(b);
+            });
+            var m = $('#modal'), last;
+            function openM(it) { last = document.activeElement; $('#phone').style.setProperty('--g', it[3]); $('#mt').textContent = it[0]; $('#mc').textContent = it[2] + ' · ' + it[1]; m.classList.add('on'); $('#close').focus(); document.body.style.overflow = 'hidden' }
+            function closeM() { m.classList.remove('on'); document.body.style.overflow = ''; if (last) last.focus() }
+            $('#close').onclick = closeM;
+            m.onclick = function (e) { if (e.target === m) closeM() };
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && m.classList.contains('on')) closeM() });
+
+            // slider
+            var tr = $('#track'), dt = $('#dots'), n = tr.children.length, cur = 0, tm;
+            for (var k = 0; k < n; k++) { (function (k) { var d = document.createElement('button'); d.setAttribute('aria-label', 'Testimoni ' + (k + 1)); d.onclick = function () { go(k, true) }; dt.appendChild(d) })(k) }
+            function go(i, reset) { cur = (i + n) % n; tr.style.transform = 'translateX(-' + cur * 100 + '%)';[].forEach.call(dt.children, function (d, j) { d.classList.toggle('on', j === cur) }); if (reset) { clearInterval(tm); auto() } }
+            function auto() { tm = setInterval(function () { go(cur + 1) }, 5500) }
+            go(0); auto();
+            var sx = 0; tr.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX }, { passive: true });
+            tr.addEventListener('touchend', function (e) { var d = e.changedTouches[0].clientX - sx; if (Math.abs(d) > 50) go(cur + (d < 0 ? 1 : -1), true) });
+
+            // form
+            var tt; function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(tt); tt = setTimeout(function () { el.classList.remove('on') }, 3500) }
+            $('#form').addEventListener('submit', function (e) {
+                e.preventDefault(); var f = e.target, ok = true;
+                function chk(name, bad, msg) { var inp = f.elements[name], er = inp.parentNode.querySelector('.err'); er.textContent = bad ? msg : ''; if (bad) ok = false }
+                chk('n', f.n.value.trim().length < 2, 'Isi nama dengan minimal 2 huruf.');
+                chk('e', !/^\S+@\S+\.\S+$/.test(f.e.value), 'Tulis email yang valid, misalnya nama@email.com.');
+                chk('m', f.m.value.trim().length < 10, 'Ceritakan proyekmu minimal 10 karakter.');
+                if (ok) { toast('Pesan terkirim. Kami balas dalam 1 hari kerja.'); f.reset() }
+            });
+
+            // scroll
+            var ticking = false;
+            function onS() { var y = scrollY; hd.classList.toggle('solid', y > 20); document.querySelectorAll('[data-p]').forEach(function (b) { b.style.transform = 'translateY(' + y * b.dataset.p + 'px)' }); ticking = false }
+            addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onS) } }, { passive: true }); onS();
+            document.querySelectorAll('.rv').forEach(function (el) { io.observe(el) });
+        })();
+    </script>
+</body>
+
+</html>
